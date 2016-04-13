@@ -1,0 +1,88 @@
+version: '2'
+services:
+  master:
+    image: scottpgallagher/galeramaster
+    environment:
+        MARIADB_USER: 'webshop'
+        MARIADB_PASSWORD: 'root'
+        MARIADB_DATABASE: 'webshop'
+    expose:
+        - '3306'
+        - '4444'
+        - '4567'
+        - '4568'
+        - '8300-8302'
+        - '8400'
+        - '8500'
+        - '8301-8302/udp'
+  node1:
+    image: scottpgallagher/galeranode
+    environment:
+        MARIADB_USER: 'webshop'
+        MARIADB_PASSWORD: 'root'
+        MARIADB_DATABASE: 'webshop'
+    links:
+        - master
+    expose:
+        - '3306'
+        - '4444'
+        - '4567'
+        - '4568'
+        - '8300-8302'
+        - '8400'
+        - '8500'
+        - '8301-8302/udp'
+  node2:
+    image: scottpgallagher/galeranode
+    environment:
+        MARIADB_USER: 'webshop'
+        MARIADB_PASSWORD: 'root'
+        MARIADB_DATABASE: 'webshop'
+    links:
+        - master
+    expose:
+        - '3306'
+        - '4444'
+        - '4567'
+        - '4568'
+        - '8300-8302'
+        - '8400'
+        - '8500'
+        - '8301-8302/udp'
+  webshop1:
+#    image: webshop
+    build: webshop/
+    expose:
+        - '8080'
+    links:
+        - mysqlloadbalancer
+        - redis0
+  webshop0:
+#    image: webshop
+    build: webshop/
+    expose:
+        - '8080'
+    links:
+        - mysqlloadbalancer
+        - redis0
+  redis0:
+    image: redis
+  loadbalancer:
+#    image: nginx-lb
+    build: nginx-loadbalancer/
+    ports:
+        - '80:80'
+    links:
+        - webshop0
+        - webshop1
+  mysqlloadbalancer:
+#    image: nginx-mysql-lb
+    build: nginx-mysql-loadbalancer/
+    expose:
+        - '3306'
+    links:
+        - master
+        - node1
+        - node2
+
+

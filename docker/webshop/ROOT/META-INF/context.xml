@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<!--
+  <Manager className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+    memcachedNodes="n1:memcached0:11211"
+    sticky="false"
+    sessionBackupAsync="false"
+    lockingMode="uriPattern:/"
+    requestUriIgnorePattern=".*\.(ico|png|gif|jpg|css|js)$"
+    transcoderFactoryClass="de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"
+    />  -->
+    <Valve className="com.gopivotal.manager.SessionFlushValve" />
+  <Manager className="org.apache.catalina.session.PersistentManager">
+    <Store className="com.gopivotal.manager.redis.RedisStore" 
+    	host="redis0"/>
+  </Manager>
+</Context>

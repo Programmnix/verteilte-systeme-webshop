@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="webshop">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>com.example.webshop.model.Product</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>   
+		<properties>
+			<property name="javax.persistence.jdbc.platform"
+				value="org.eclipse.persistence.platform.database.MySQLPlatform" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysqlloadbalancer/wordpressmu" />
+			<property name="javax.persistence.jdbc.user" value="wordpressmu" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

@@ -1,0 +1,5 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <servlet-name>StartupServerlet</servlet-name>
+    <servlet-class>com.example.webshop.StartupServerlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+</web-app>
