@@ -21,6 +21,7 @@ Die Software basiert auf dem Framework [Vaadin](http://www.vaadin.com), mit dem 
 # High-Availability
 
 Um die HA zu erreichen wird folgende Software eingesetzt:
+
 Software | Beschreibung
 ------------ | -------------
 [Galera](http://galeracluster.com) | Mysql-Cluster
@@ -29,6 +30,17 @@ Software | Beschreibung
 [tomcat](http://tomcat.apache.org/) | Java-Webserver
 [redis](http://redis.io/) | InMemory-Databank für Sessionsharing
 
+Auf allen Host-Systemen wird das RancherOS installiert. Damit ist es möglich alle Docker-Container auf die jeweiligen Hosts transparent via RancherUI zu verteilen. 
+
+Jedes Land, also jede Domain, bekommt ein eigenen Serverpool, der seperat zu verwalten und physikalisch von anderen getrennt ist.
+
+## Infrastruktur
+
+Dem öffentlichen DNS-Server werden alle IPs der **HTTP-Loadbalancer** mitgeteilt. Sobald einer ausfällt benutzt der Browser ein anderen Loadbalancer.
+
+![HA-image](https://raw.githubusercontent.com/Programmnix/verteilte-systeme-webshop/master/images/infrastuktur.png)
+
+Die *http-lbx*-Loadbalancer verteilen die Anfragen auf alle *tomcatx*-Webserver. Diese Teilen ihre Session via *redisx*-Server, somit ist eine **non-Sticky** Session möglich. Alle Webserver sind greifen wiederum auf 2 *mysql-lb*-Loadbalancer zu, die die Anfragen auf das *mysql*-Cluster verteilen. Im Hintergrund arbeitet **Galera**, dass die Datenbanken synchron hält. 
 
 # How-To
 
